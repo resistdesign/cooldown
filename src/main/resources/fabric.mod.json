@@ -3,7 +3,7 @@
   "id": "cooldown",
   "version": "${version}",
   "name": "COOLDOWN",
-  "description": "Hardcore with a Reset! Death locks you out for a configurable real-time cooldown.",
+  "description": "Hardcore with a Reset! Death locks you out for a configurable real-time cooldown without costing your inventory.",
   "authors": ["Resist Design"],
   "contact": {
     "homepage": "https://github.com/resistdesign/cooldown",
@@ -14,6 +14,9 @@
   "entrypoints": {
     "main": ["design.resist.cooldown.CooldownMod"]
   },
+  "mixins": [
+    "cooldown.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.19.3",
     "minecraft": "~26.2",
