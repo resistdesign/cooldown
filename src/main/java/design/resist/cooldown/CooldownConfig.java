@@ -10,7 +10,7 @@ import java.util.Properties;
 import net.fabricmc.loader.api.FabricLoader;
 
 final class CooldownConfig {
-	private static final long DEFAULT_COOLDOWN_SECONDS = 5 * 60 * 60;
+	private static final long DEFAULT_COOLDOWN_SECONDS = 20 * 60;
 	private static final String COOLDOWN_SECONDS = "cooldown-seconds";
 
 	private final long cooldownSeconds;

@@ -14,18 +14,19 @@ That is intentionally most of the game design.
 
 - No instant respawn.
 - No permanent character deletion.
+- **No inventory or XP loss from death.**
 - The lockout survives reconnects and server restarts.
 - Time passes while the server is offline.
 - Server owners choose the cooldown duration.
 
 ## Default
 
-The default cooldown is **5 hours**.
+The default cooldown is **20 minutes**.
 
 On first launch COOLDOWN creates `config/cooldown.properties`:
 
 ```properties
-cooldown-seconds=18000
+cooldown-seconds=1200
 ```
 
 Examples:
@@ -39,15 +40,21 @@ Examples:
 
 Restart the server after changing the configuration.
 
+## Client requirements
+
+For a dedicated server, **install COOLDOWN only on the server**. Players can connect with a normal vanilla/Fabric client and do not need COOLDOWN installed locally.
+
+The core mechanic is server-authoritative: the server detects death, preserves inventory/XP, records the cooldown, disconnects the player, and rejects reconnects until the cooldown expires.
+
+The mod is still safe to install in a local Fabric instance so the same mechanic can run on Minecraft's integrated server for single-player/LAN testing.
+
 ## Platform
 
 - Minecraft Java Edition 26.2
 - Fabric Loader 0.19.3+
 - Fabric API
 - Java 25
-- Server-side mechanics; install on the server
-
-Single-player support is possible when the mod is installed in the local Fabric instance because Minecraft runs an integrated server.
+- Dedicated-server clients do **not** need the mod
 
 ## Development
 
@@ -63,4 +70,4 @@ The built mod is emitted under `build/libs/`.
 
 **0.1.0 — core mechanic under development.**
 
-The first milestone is deliberately narrow: detect a real player death, persist the lockout using wall-clock time, disconnect the player, and reject reconnects until the cooldown expires.
+The first milestone is deliberately narrow: detect a real player death, preserve the player's inventory and XP, persist the lockout using wall-clock time, disconnect the player, and reject reconnects until the cooldown expires.
