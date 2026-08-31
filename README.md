@@ -2,15 +2,13 @@
 
 **Hardcore with a Reset!**
 
-COOLDOWN is a Minecraft server mod that makes death matter without making it permanent.
+COOLDOWN makes death matter without making it permanent.
 
 When you die, you are done playing on that server until your real-time cooldown expires. Then you get another life.
 
 ## The rule
 
 > Die once. Cool down. Come back.
-
-That is intentionally most of the game design.
 
 - No instant respawn.
 - No permanent character deletion.
@@ -19,11 +17,51 @@ That is intentionally most of the game design.
 - Time passes while the server is offline.
 - Server owners choose the cooldown duration.
 
+## Install
+
+Download the latest `cooldown-*.jar` from **GitHub Releases**. Development builds are also attached to successful GitHub Actions builds as `cooldown-server-jar`.
+
+### Paper / Paper-compatible servers
+
+1. Stop the server.
+2. Put `cooldown-*.jar` in the server's `plugins/` folder.
+3. Start the server.
+
+That's it. **Players install nothing.**
+
+COOLDOWN's Paper build uses only server-side behavior and the same JAR is also the Fabric mod.
+
+### Fabric servers
+
+1. Make sure the server is running Fabric Loader for Minecraft 26.2 and has Fabric API installed.
+2. Put `cooldown-*.jar` in the server's `mods/` folder.
+3. Start the server.
+
+Again, **players install nothing.**
+
+### Vanilla server.jar
+
+Vanilla Minecraft cannot load mods or plugins by itself. Convert the server to **Paper** or **Fabric**, then use the matching instructions above. Your world can remain the same; back it up before changing server software.
+
+## Compatibility
+
+| Server | Install location | Extra requirement | Client install |
+| --- | --- | --- | --- |
+| Paper 26.2 | `plugins/` | None | **No** |
+| Fabric 26.2 | `mods/` | Fabric API | **No** |
+| Vanilla | — | Switch to Paper or Fabric | — |
+
+The **same COOLDOWN JAR** is used for Paper and Fabric.
+
 ## Default
 
 The default cooldown is **20 minutes**.
 
-On first launch COOLDOWN creates `config/cooldown.properties`:
+COOLDOWN creates its config on first launch:
+
+**Fabric:** `config/cooldown.properties`
+
+**Paper:** `plugins/COOLDOWN/cooldown.properties`
 
 ```properties
 cooldown-seconds=1200
@@ -40,34 +78,33 @@ Examples:
 
 Restart the server after changing the configuration.
 
-## Client requirements
+## What COOLDOWN changes
 
-For a dedicated server, **install COOLDOWN only on the server**. Players can connect with a normal vanilla/Fabric client and do not need COOLDOWN installed locally.
+On death COOLDOWN:
 
-The core mechanic is server-authoritative: the server detects death, preserves inventory/XP, records the cooldown, disconnects the player, and rejects reconnects until the cooldown expires.
+1. preserves inventory and XP;
+2. records the player's cooldown using real-world wall-clock time;
+3. disconnects the player;
+4. rejects reconnects until the cooldown expires.
 
-The mod is still safe to install in a local Fabric instance so the same mechanic can run on Minecraft's integrated server for single-player/LAN testing.
+It does **not** globally enable Minecraft's `keep_inventory` gamerule.
 
 ## Platform
 
 - Minecraft Java Edition 26.2
-- Fabric Loader 0.19.3+
-- Fabric API
 - Java 25
-- Dedicated-server clients do **not** need the mod
+- Paper 26.2 or Fabric Loader 0.19.3+
+- Fabric API required only on Fabric servers
+- Dedicated-server clients do **not** need COOLDOWN
 
-## Development
-
-The project follows the current Fabric 26.2 toolchain.
+## Building
 
 ```bash
 gradle build
 ```
 
-The built mod is emitted under `build/libs/`.
+The installable JAR is emitted under `build/libs/`. CI also uploads it as the `cooldown-server-jar` artifact, and version tags automatically create GitHub Releases with the JAR attached.
 
 ## Status
 
-**0.1.0 — core mechanic under development.**
-
-The first milestone is deliberately narrow: detect a real player death, preserve the player's inventory and XP, persist the lockout using wall-clock time, disconnect the player, and reject reconnects until the cooldown expires.
+**0.1.0 — early release.**
