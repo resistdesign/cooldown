@@ -8,6 +8,10 @@ base {
 }
 
 repositories {
+	maven {
+		name = 'PaperMC'
+		url = 'https://repo.papermc.io/repository/maven-public/'
+	}
 }
 
 loom {
@@ -22,13 +26,16 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// The same JAR doubles as a Paper plugin. Paper provides this API at runtime.
+	compileOnly "io.papermc.paper:paper-api:26.2.build.+"
 }
 
 processResources {
 	def version = project.version
 	inputs.property "version", version
 
-	filesMatching("fabric.mod.json") {
+	filesMatching(['fabric.mod.json', 'plugin.yml']) {
 		expand "version": version
 	}
 }
