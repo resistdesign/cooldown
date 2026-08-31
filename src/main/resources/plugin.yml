@@ -1,0 +1,7 @@
+name: COOLDOWN
+version: '${version}'
+main: design.resist.cooldown.CooldownPaperPlugin
+description: Hardcore with a Reset! Death locks you out for a configurable real-time cooldown.
+author: Resist Design
+website: https://github.com/resistdesign/cooldown
+api-version: '26.2'
